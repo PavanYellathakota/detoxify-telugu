@@ -1,0 +1,54 @@
+Detoxify_Telugu/
+├── assets/
+├── config/
+├── data/
+│   ├── processed/
+│   │   └── toxic_data_cleaned.csv
+│   ├── raw/
+│   │   ├── scraped/
+│   │   │   └── toxicity_data.csv
+│   ├── testing_data/
+│   │   └── testing.csv
+│   ├── training/
+│   │   ├── binary/
+│   │   │   └── dataset_binary.csv
+│   │   └── multi/
+│   │       └── dataset_multiclass.csv
+├── docs/
+├── logs/
+├── models/
+│   ├── Binary/
+│   │   └── google_bert_uncased_L-4_H-256_A-4/
+│   │   └── prajjwal1_bert-tiny/
+│   └── Multi-Class/
+│       ├── google_bert_uncased_L-4_H-256_A-4/
+│       ├── prajjwal1_bert-mini/
+│       └── prajjwal1_bert-tiny/
+├── utils/
+│   ├── __pycache__/
+│   ├── check.ipynb
+│   ├── data_annotation.py
+│   ├── data_balancing.py
+│   ├── data_cleaning.py
+│   ├── data_collection.py
+│   ├── data_summary.py
+│   ├── generate_toxicity_json.py
+│   ├── helper.py
+│   ├── IG_Scraper.py
+│   ├── mappings.json
+│   ├── model_evaluation.py
+│   ├── model_training.py
+│   ├── predict.py
+│   ├── recent_words.txt
+│   ├── synthetic_data_gen.py
+│   ├── text_generator.py
+│   ├── toxicity_words.json
+│   ├── X_Scraper.py
+│   └── YT_Scraper.py
+├── venv/
+├── .gitignore
+├── app.py
+├── DetoxifyTelugu.html
+├── project.aurdino
+├── README.md
+└── requirements.txt

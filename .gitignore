@@ -1,0 +1,35 @@
+# ===================== 🔥 Detoxify-Telugu Project Ignore Rules ===================== #
+
+# 🛠️ Virtual environment
+venv/
+
+# 🧠 Trained model directories (binary and multiclass models)
+models/
+
+# 🧾 Log files and folders
+logs/
+
+# ⚙️ Configuration files
+config/
+
+# 🚫 DO NOT PUSH: Contains sensitive or curated toxicity terms
+utils/toxicity_words.json
+utils/generate_toxicity_json.py
+
+# __pycache__ and other Python metadata
+__pycache__/
+**/__pycache__/
+
+# Temporary files
+*.pyc
+*.pyo
+*.pyd
+*.DS_Store
+*.ipynb_checkpoints/
+
+# VS Code project settings (optional)
+.vscode/
+
+# OS-specific files
+Thumbs.db
+.DS_Store

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detoxify-Telugu Interface Walkthrough</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            margin: 0;
+        }
+        h1, h2, h3 {
+            color: #006400;
+        }
+        h1, h3 {
+            text-align: center;
+        }
+        h3 {
+            color: grey;
+        }
+        .intro, .credits {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .intro img {
+            display: block;
+            margin: 0 auto;
+            width: 400px;
+        }
+        .intro p, .credits p {
+            font-size: 18px;
+        }
+        .intro ul, .credits ul {
+            font-size: 17px;
+            list-style-position: inside;
+            padding-left: 0;
+        }
+        .step, .installation, .expander {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .step img, .installation img {
+            width: 100%;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        .logos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .logos img {
+            width: 250px;
+            height: auto;
+        }
+        .logos p {
+            margin: 5px 0;
+            font-size: 14px;
+            text-align: center;
+        }
+        iframe {
+            display: block;
+            margin: 20px auto;
+            width: 80%;
+            height: 400px;
+            border: none;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .expander {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .expander h3 {
+            margin-top: 0;
+        }
+        a {
+            color: #006400;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <img src="assets/images/detoxify_telugu_logo.png" alt="Detoxify-Telugu Logo">
+        <h1>Detoxify-Telugu</h1>
+        <h3>Combating Toxicity in Regional Social Media Spaces</h3>
+        <p><b>Detoxify-Telugu</b> is a pioneering initiative aimed at detecting and mitigating <b>hate speech</b>, <b>abusive language</b>, and <b>toxic behavior</b> across Telugu social media platforms. Leveraging advanced NLP techniques, this platform identifies explicit offensive content and categorizes it for better moderation and community safety.</p>
+        <h3>🎯 Project Overview</h3>
+        <p>This model serves as a foundational tool for:</p>
+        <ul>
+            <li>Detecting direct abusive comments.</li>
+            <li>Categorizing toxicity types.</li>
+            <li>Laying the groundwork for future context-aware moderation systems.</li>
+        </ul>
+    </div>
+
+    <h1>🔍 Detoxify-Telugu Platform: Interface Walkthrough</h1>
+    <p style="text-align:center;">A step-by-step guide to navigating and using the platform effectively.</p>
+
+    <div class="installation">
+        <h2>🛠 Installation</h2>
+        <h3>📦 Requirements</h3>
+        <ul>
+            <li>Python 3.8+</li>
+            <li>pip</li>
+            <li>Google Chrome + ChromeDriver (or) Firefox + GeckoDriver</li>
+        </ul>
+        <h3>🔧 Setup Instructions</h3>
+        <pre>
+# Step 1: Clone the repo
+git clone https://github.com/pavanyellathakota/detoxify-telugu.git
+cd detoxify-telugu
+
+# Step 2: Set up virtual environment
+python -m venv venv
+source venv/bin/activate        # (Windows: venv\Scripts\activate)
+
+# Step 3: Install dependencies
+pip install -r requirements.txt
+
+# Step 4: Launch app
+streamlit run app.py
+        </pre>
+    </div>
+
+    <div class="step">
+        <h2>1. Home Page</h2>
+        <p>Overview of the platform and its goals. Introduces the creator and project roadmap.</p>
+        <img src="assets/screenshots/home_page.png" alt="Home Page Screenshot">
+    </div>
+
+    <div class="step">
+        <h2>2. Data Collection</h2>
+        <p>Scrape comments from YouTube using multiple video URLs with a robust Selenium-based scraper powered by GeckoDriver (Firefox). Features include dynamic loading of comments with 'Show more' clicks, random scrolling to mimic human behavior, and support for up to 1000 comments per video. Save results as a CSV file, with an option to append to existing datasets via a Streamlit UI.</p>
+        <img src="assets/screenshots/data_collection.png" alt="Data Collection Screenshot">
+    </div>
+
+    <div class="step">
+        <h2>3. Data Annotation</h2>
+        <p>Use keyword-based automation or manual review to label data with toxicity type.</p>
+        <img src="assets/screenshots/data_annotation.png" alt="Annotation Screenshot">
+    </div>
+
+    <div class="step">
+        <h2>4. Data Cleaning & Balancing</h2>
+        <p>Remove duplicates, fix spelling, and balance across toxicity classes using built-in scripts.</p>
+        <img src="assets/screenshots/data_cleaning.png" alt="Cleaning Screenshot">
+    </div>
+
+    <div class="step">
+        <h2>5. Model Training</h2>
+        <p>Select model type (Binary or Multi-Class), choose pre-trained BERT variant, adjust hyperparameters, and train.</p>
+        <img src="assets/screenshots/model_training.png" alt="Model Training Screenshot">
+    </div>
+
+    <div class="step">
+        <h2>6. Model Evaluation</h2>
+        <p>View precision, recall, F1-score, and confusion matrix on validation set. Option to evaluate any saved model.</p>
+        <img src="assets/screenshots/model_evaluation.png" alt="Model Evaluation Screenshot">
+    </div>
+
+    <div class="step">
+        <h2>7. Real-Time Prediction</h2>
+        <p>Enter text or upload CSV for batch predictions. Get live model classification results with confidence scores.</p>
+        <img src="assets/screenshots/prediction.png" alt="Prediction Screenshot">
+    </div>
+
+    <div class="step">
+        <h2>📺 Video Demo (Coming Soon)</h2>
+        <p>A guided tour through each section of the platform.</p>
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_REPLACE_LATER" allowfullscreen></iframe>
+    </div>
+
+    <div class="credits">
+        <h3>👨‍💻 About the Creator</h3>
+        <p>Crafted by <b>Pavan Yellathakota</b> (<a href="https://pye.pages.dev" target="_blank">pye.pages.dev</a>) under the guidance of <a href="https://www.clarkson.edu/people/boris-jukic" target="_blank"><b>Dr. Boris Jukic</b></a>, <i>Director of Business Analytics</i>, Clarkson University.</p>
+
+        <h3>🏛️ Association</h3>
+        <div class="logos">
+            <div>
+                <img src="assets/images/CUDS.jpg" alt="Clarkson University Data Science Dept.">
+                <p>Clarkson University Data Science Dept.</p>
+            </div>
+            <div>
+                <img src="assets/images/clarkson_logo.png" alt="Clarkson University">
+                <p>Clarkson University</p>
+            </div>
+        </div>
+
+        <div class="expander">
+            <h3>📖 Vision & Future Roadmap</h3>
+            <ul>
+                <li>Enhance flexibility to understand nuanced dialects.</li>
+                <li>Introduce a Toxicity Scoring System for user monitoring.</li>
+                <li>Expand to contextual and multilingual detection models.</li>
+            </ul>
+        </div>
+
+        <p>🚀 <b>Detoxify-Telugu</b> is inspired by the <a href="https://pypi.org/project/detoxify/" target="_blank"><b>Detoxify Project</b></a>.</p>
+        <p>Proudly open-source and built for empowering regional content moderation.</p>
+    </div>
+</body>
+</html>
