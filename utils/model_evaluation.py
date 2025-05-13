@@ -1,6 +1,15 @@
-# ================================
-# 📄 Updated model_evaluation.py
-# ================================
+# ============================================================================ #
+#                         📉 MODEL EVALUATION MODULE                          #
+# ============================================================================ #
+# Filename     : model_evaluation.py
+# Description  : Loads a fine-tuned model and evaluates it on validation data
+#                using metrics like accuracy, F1-score, and confusion matrix.
+# Author       : PAVAN YELLATHAKOTA (pye.pages.dev)
+# Created Date : APR 2025
+# Project      : Toxicity Detection / Classification Platform
+# ============================================================================ #
+
+# Import necessary libraries
 
 import streamlit as st
 import pandas as pd
