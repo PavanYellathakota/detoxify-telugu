@@ -61,7 +61,7 @@
             color: #666;
             text-align: center;
         }
-        .intro, .creator-association, .credits-contribute, .contact, .dataset-disclaimer {
+        .intro, .creator-association, .credits-contribute, .contact, .dataset-disclaimer, .models {
             text-align: center;
             margin: 30px 0;
         }
@@ -74,7 +74,7 @@
         .intro img:hover {
             transform: scale(1.05);
         }
-        .intro p, .creator-association p, .credits-contribute p, .contact p, .dataset-disclaimer p {
+        .intro p, .creator-association p, .credits-contribute p, .contact p, .dataset-disclaimer p, .models p {
             font-size: 1.1em;
             max-width: 800px;
             margin: 10px auto;
@@ -102,14 +102,14 @@
             gap: 20px;
             margin: 20px 0;
         }
-        .step, .installation {
+        .step, .installation, .models {
             background: #fff;
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .step:hover, .installation:hover {
+        .step:hover, .installation:hover, .models:hover {
             transform: translateY(-5px);
             box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         }
@@ -207,26 +207,22 @@
             text-align: center;
             display: none;
         }
-        .performance-table {
+        .performance-table, .models-table {
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
             margin: 20px auto;
             border-collapse: collapse;
-            display: none;
         }
-        .step details[open] .performance-table {
-            display: table;
-        }
-        .performance-table th, .performance-table td {
+        .performance-table th, .performance-table td, .models-table th, .models-table td {
             border: 1px solid #ddd;
             padding: 10px;
             text-align: left;
         }
-        .performance-table th {
+        .performance-table th, .models-table th {
             background: #006400;
             color: #fff;
         }
-        .performance-table tr:nth-child(even) {
+        .performance-table tr:nth-child(even), .models-table tr:nth-child(even) {
             background: #f9f9f9;
         }
         .btn {
@@ -278,18 +274,31 @@
             <img src="assets/images/detoxify_telugu_logo.png" alt="Detoxify-Telugu Logo" aria-label="Detoxify-Telugu Logo">
             <h1>Detoxify-Telugu</h1>
             <h3>Hate Speech Detection in Telugu & Tenglish</h3>
-            <p><b>Detoxify-Telugu</b> is an open-source platform for detecting toxic content in Telugu, Tenglish, and English social media inputs. Powered by <b>BERT-based transformer models</b> and a <b>Streamlit UI</b>, it enables end-to-end toxicity classification with YouTube scraping, data annotation, and real-time predictions.</p>
+            <p><b>Detoxify-Telugu</b> is an open-source platform for detecting toxic content in Telugu, Tenglish (Telugu-English code-mixed), and English social media inputs. Powered by <b>BERT-based transformer models</b> and a <b>Streamlit UI</b>, it enables end-to-end toxicity classification with YouTube scraping, data annotation, and real-time predictions.</p>
             <h3>🎯 Key Features</h3>
             <ul>
-                <li>Binary and multi-class toxicity classification</li>
+                <li>Binary (Toxic vs. Non-Toxic) and multi-class (11 toxicity types + "none") classification</li>
                 <li>YouTube comment scraping with Selenium</li>
-                <li>Data cleaning, balancing, and annotation</li>
-                <li>Real-time and batch predictions</li>
+                <li>Data cleaning, balancing, and rule-based Tenglish-to-Telugu transliteration</li>
+                <li>Real-time and batch predictions via text or CSV</li>
             </ul>
         </div>
 
+        <div class="models">
+            <h2>✅ Supported Models</h2>
+            <p>Detoxify-Telugu uses lightweight BERT models optimized for resource-constrained environments. Larger models are planned for future enhancements.</p>
+            <table class="models-table">
+                <tr>
+=2><th>Model</th><th>Parameters</th></tr>
+                <tr><td>prajjwal1/bert-tiny</td><td>~4.3M</td></tr>
+                <tr><td>prajjwal1/bert-mini</td><td>~29M</td></tr>
+                <tr><td>google/bert_uncased_L-4_H-256_A-4</td><td>~4.3M</td></tr>
+            </table>
+            <p><i>Note: Future plans include fine-tuning larger models like <code>distilbert-base-uncased</code> (~66M parameters) for improved performance.</i></p>
+        </div>
+
         <h1>🔍 Platform Walkthrough</h1>
-        <p style="text-align:center;">Explore the end-to-end pipeline for toxicity detection.</p>
+        <p style="text-align:center;">Explore the end-to-end pipeline for toxicity detection in Telugu and Tenglish.</p>
 
         <div class="installation">
             <h2>🛠 Installation</h2>
@@ -298,7 +307,7 @@
                 <ul>
                     <li>Python 3.8+</li>
                     <li>pip</li>
-                    <li>Firefox + GeckoDriver (See <a href="https://github.com/PavanYellathakota/detoxify-telugu/tree/main/docs">documentation</a>)</li>
+                    <li>Google Chrome + ChromeDriver or Firefox + GeckoDriver (See <a href="https://github.com/PavanYellathakota/detoxify-telugu/tree/main/docs">documentation</a>)</li>
                 </ul>
                 <pre>
 # Step 1: Clone the repo
@@ -307,7 +316,7 @@ cd detoxify-telugu
 
 # Step 2: Set up virtual environment
 python -m venv venv
-source venv/bin/activate        # (Windows: venv\Scripts\activate)
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # Step 3: Install dependencies
 pip install -r requirements.txt
@@ -319,7 +328,7 @@ streamlit run app.py
             <p>View the complete project structure <a href="https://github.com/PavanYellathakota/detoxify-telugu" target="_blank">here</a>.</p>
             <div class="dataset-disclaimer">
                 <h3>⚠️ Dataset Disclaimer</h3>
-                <p>The dataset included is a sanitized version for demonstration. Due to explicit content, the full dataset is not public. Contact the author (see <a href="#contact">Contact</a>) for access.</p>
+                <p>The dataset (~8,000 records) includes Telugu, Tenglish, and English comments, with one class >1,000 samples, one >700, and others 400–600. Due to explicit content, only a sanitized version is included. Contact the author (see <a href="#contact">Contact</a>) for full access.</p>
             </div>
         </div>
 
@@ -331,81 +340,102 @@ streamlit run app.py
             </div>
             <div class="step">
                 <h2>2. Data Collection</h2>
-                <p>Scrape YouTube comments using Selenium with GeckoDriver.</p>
+                <p>Scrape YouTube comments using Selenium with ChromeDriver or GeckoDriver.</p>
                 <img src="assets/Imgs/data_collection.png" alt="Data Collection Screenshot" aria-label="Data Collection Screenshot" loading="lazy">
             </div>
             <div class="step">
                 <h2>3. Data Annotation</h2>
-                <p>Label data with toxicity types via automation or manual review.</p>
+                <p>Label data with 11 toxicity types + "none" via automated keyword-based or manual review. Challenges include detecting sarcasm and indirect hate.</p>
                 <img src="assets/Imgs/data_annotation.png" alt="Annotation Screenshot" aria-label="Data Annotation Screenshot" loading="lazy">
             </div>
             <div class="step">
                 <h2>4. Data Cleaning</h2>
-                <p>Remove duplicates and fix spelling with scripts.</p>
+                <p>Normalize text, handle Tenglish code-mixing, remove duplicates, and fix spelling/slang (e.g., "h8" to "hate").</p>
                 <img src="assets/Imgs/data_cleaning.png" alt="Cleaning Screenshot" aria-label="Data Cleaning Screenshot" loading="lazy">
             </div>
             <div class="step">
                 <h2>5. Data Summary</h2>
-                <p>Perform exploratory data analysis (EDA) to summarize and visualize dataset characteristics.</p>
+                <p>Perform exploratory data analysis (EDA) to visualize dataset characteristics (e.g., class distribution, text length) using <code>data_summary.py</code>.</p>
                 <img src="assets/Imgs/EDA.png" alt="Data Summary Screenshot" aria-label="Data Summary Screenshot" loading="lazy">
             </div>
             <div class="step">
                 <h2>6. Data Balancing</h2>
-                <p>Balance toxicity classes with built-in scripts.</p>
+                <p>Balance classes to mitigate "none" class dominance using <code>data_balancing.py</code>.</p>
                 <img src="assets/Imgs/data_balancing.png" alt="Balancing Screenshot" aria-label="Data Balancing Screenshot" loading="lazy">
             </div>
             <div class="step">
                 <h2>7. Model Training</h2>
-                <p>Train BERT models with customizable hyperparameters.</p>
+                <p>Train BERT models with customizable hyperparameters. Smaller models (e.g., <code>bert-tiny</code>) converge slower for multi-class tasks.</p>
                 <img src="assets/Imgs/model_training.png" alt="Model Training Screenshot" aria-label="Model Training Screenshot" loading="lazy">
             </div>
             <div class="step">
                 <h2>8. Model Evaluation</h2>
-                <p>View precision, recall, F1-score, and confusion matrix.</p>
+                <p>View Accuracy, Precision, Recall, F1-Score, and confusion matrices. Multi-class models struggle with semantic overlap (e.g., "mixed_toxicity" vs. "gender_targeted").</p>
                 <img src="assets/Imgs/model_evaluation.png" alt="Model Evaluation Screenshot" aria-label="Model Evaluation Screenshot" loading="lazy">
             </div>
             <div class="step">
                 <h2>9. Real-Time Prediction</h2>
-                <p>Classify text or CSV inputs with confidence scores.</p>
+                <p>Classify text or CSV inputs with confidence scores for moderation.</p>
                 <img src="assets/Imgs/prediction.png" alt="Prediction Screenshot" aria-label="Prediction Screenshot" loading="lazy">
             </div>
             <div class="step">
                 <h2>10. Tenglish-Telugu Script Generator</h2>
-                <p>A rule-based system to convert transliterated Tenglish text into Telugu script for consistent processing.</p>
+                <p>Convert transliterated Tenglish to Telugu script using a rule-based system for consistent preprocessing.</p>
                 <img src="assets/Imgs/text_generator.png" alt="Tenglish-Telugu Script Generator Screenshot" aria-label="Tenglish-Telugu Script Generator Screenshot" loading="lazy">
             </div>
         </div>
 
         <div class="step">
             <h2>11. Model Performance</h2>
-            <details>
-                <summary>View Model Performance Metrics</summary>
-                <table class="performance-table">
-                    <tr>
-                        <th>Task</th>
-                        <th>Model</th>
-                        <th>Accuracy</th>
-                        <th>F1 Score</th>
-                    </tr>
-                    <tr>
-                        <td>Binary Classification</td>
-                        <td>google/bert_uncased_L-4_H-256_A-4</td>
-                        <td>85.6%</td>
-                        <td>0.8562</td>
-                    </tr>
-                    <tr>
-                        <td>Multi-Class Classification</td>
-                        <td>prajjwal1/bert-tiny</td>
-                        <td>34.1%</td>
-                        <td>0.2754</td>
-                    </tr>
-                </table>
-            </details>
+            <p>Evaluated on a ~8,000-record Telugu/Tenglish dataset. Binary classification performs robustly, while multi-class struggles due to class imbalance and linguistic diversity.</p>
+            <table class="performance-table">
+                <tr>
+                    <th>Task</th>
+                    <th>Model</th>
+                    <th>Accuracy</th>
+                    <th>Precision (Macro)</th>
+                    <th>Recall (Macro)</th>
+                    <th>F1-Score (Macro)</th>
+                </tr>
+                <tr>
+                    <td>Binary</td>
+                    <td>google/bert_uncased_L-4_H-256_A-4</td>
+                    <td>85.62%</td>
+                    <td>85.7%</td>
+                    <td>89.5%</td>
+                    <td>0.8562</td>
+                </tr>
+                <tr>
+                    <td>Multi-Class</td>
+                    <td>prajjwal1/bert-mini</td>
+                    <td>47.64%</td>
+                    <td>0.571</td>
+                    <td>0.476</td>
+                    <td>0.491</td>
+                </tr>
+                <tr>
+                    <td>Multi-Class</td>
+                    <td>google/bert_uncased_L-4_H-256_A-4</td>
+                    <td>45.30%</td>
+                    <td>0.516</td>
+                    <td>0.408</td>
+                    <td>0.404</td>
+                </tr>
+                <tr>
+                    <td>Multi-Class</td>
+                    <td>prajjwal1/bert-tiny</td>
+                    <td>34.18%</td>
+                    <td>0.442</td>
+                    <td>0.342</td>
+                    <td>0.237</td>
+                </tr>
+            </table>
+            <p><b>Challenges</b>: Class imbalance (one class >1,000 samples, others 400–600) and semantic overlap (e.g., "mixed_toxicity" vs. "political_toxicity") reduce multi-class performance. Future plans include data expansion and class-weighted training.</p>
         </div>
 
         <div class="step">
             <h2>12. Video Demo</h2>
-            <p>A guided tour of the platform’s features.</p>
+            <p>A guided tour of the platform’s features, showcasing the Streamlit UI and pipeline.</p>
             <div id="video-thumbnail-1" aria-label="Click to play video demo">
                 <img src="assets/Imgs/thumbnail.png" alt="Video Thumbnail" class="thumbnail" loading="lazy">
                 <div class="play-button"></div>
@@ -434,16 +464,19 @@ streamlit run app.py
 
         <div class="credits-contribute">
             <h3>🧾 Credits & Contribution</h3>
-            <p>Inspired by <a href="https://github.com/unitaryai/detoxify" target="_blank">Detoxify</a>. Built with <a href="https://huggingface.co/transformers/" target="_blank">HuggingFace Transformers</a> and <a href="https://streamlit.io" target="_blank">Streamlit</a>.</p>
+            <p>Inspired by <a href="https://github.com/unitaryai/detoxify" target="_blank">Detoxify</a>. Built with <a href="https://huggingface.co/transformers/" target="_blank">HuggingFace Transformers</a>, <a href="https://streamlit.io" target="_blank">Streamlit</a>, and <a href="https://www.selenium.dev" target="_blank">Selenium</a>.</p>
             <p>Detoxify-Telugu is open-source! Fork the <a href="https://github.com/PavanYellathakota/detoxify-telugu" target="_blank">repository</a> and submit pull requests to improve the platform.</p>
             <div class="expander">
                 <h3>📖 Vision & Future Roadmap</h3>
                 <ul>
-                    <li>Enhance dialect understanding for nuanced detection.</li>
-                    <li>Implement a Toxicity Scoring System.</li>
-                    <li>Expand to multilingual models.</li>
-                    <li>Prioritizing the enhancement of more diversified labelled data across different classified categories.</li>
-                    <li>Standardizing the toxicity classifications more effectively.</li>
+                    <li>Enhance dialect understanding for nuanced toxicity detection.</li>
+                    <li>Implement a toxicity scoring system for user profiling.</li>
+                    <li>Expand to multilingual models for broader language support.</li>
+                    <li>Augment dataset with synthetic toxic patterns using <code>synthetic_data_gen.py</code>.</li>
+                    <li>Improve sarcasm detection with sentence embeddings (e.g., SBERT).</li>
+                    <li>Deploy models as REST APIs or browser-based toxicity filters.</li>
+                    <li>Collect more Telugu/Tenglish data to address class imbalance.</li>
+                    <li>Merge overlapping toxicity categories (e.g., "gender_targeted" and "identity_attack").</li>
                 </ul>
             </div>
         </div>
@@ -454,18 +487,12 @@ streamlit run app.py
             Email: <a href="mailto:pavanyellathakota@gmail.com">pavanyellathakota@gmail.com</a><br>
             Website: <a href="https://pye.pages.dev" target="_blank">pye.pages.dev</a></p>
         </div>
-
-        
     </div>
 
     <script>
         document.getElementById("video-thumbnail-1").addEventListener("click", function () {
             document.getElementById("video-thumbnail-1").style.display = "none";
             document.getElementById("video-container-1").style.display = "block";
-        });
-        document.getElementById("video-thumbnail-2").addEventListener("click", function () {
-            document.getElementById("video-thumbnail-2").style.display = "none";
-            document.getElementById("video-container-2").style.display = "block";
         });
     </script>
 </body>

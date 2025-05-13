@@ -7,13 +7,13 @@
 
 ## 🧭 Overview
 
-**Detoxify-Telugu** is a thoughtful platform designed to detect toxic content across Telugu, Tenglish, and English social media inputs. The system supports both **binary** (toxic vs. non-toxic) and **multi-class** classification modes, enabling users to train, evaluate, and predict toxicity in an end-to-end pipeline powered by **BERT-based transformer models**.
+**Detoxify-Telugu** is a thoughtful platform designed to detect toxic content across Telugu, Tenglish (Telugu-English code-mixed), and English social media inputs. It supports binary (Toxic vs. Non-Toxic) and multi-class (11 toxicity types + "none") classification using fine-tuned BERT-based models. The end-to-end pipeline, powered by a Streamlit UI, enables technical and non-technical users to scrape, annotate, train, evaluate, and predict toxicity with ease.
 
 This platform empowers both technical and non-technical users with:
 
-* Intuitive UI for training/evaluation/prediction
-* Real-time toxicity detection via text/CSV
-* Keyword-based auto annotation
+* Intuitive UI for data annotation, cleaning, model training, and evaluation.
+* Real-time and batch toxicity detection via text or CSV inputs
+* Keyword-based auto-annotation for efficient labeling
 * Data scraping from YouTube
 
 ---
@@ -21,12 +21,12 @@ This platform empowers both technical and non-technical users with:
 ## ✨ Features
 
 * 🚀 End-to-end NLP pipeline via Streamlit
-* ⚙️ BERT fine-tuning (Binary + Multi-class)
-* 📊 Accuracy, F1-score, Confusion Matrix support
-* 🧪 Real-time single and batch CSV predictions
-* 🧼 Cleaning, balancing, annotation built-in
-* 💬 Transliteration for Tenglish > Telugu
-* 📥 YouTube Scraping with Selenium (Headless)
+* ⚙️  Fine-tuned BERT models for binary and multi-class toxicity detection.
+* 📊 Comprehensive metrics: Accuracy, Precision, Recall, F1-Score, Confusion Matrix.
+* 🧪 Real-time single and batch CSV predictions for moderation.
+* 🧼 Built-in data cleaning, balancing, and annotation.
+* 💬 Rule-based Tenglish-to-Telugu transliteration for preprocessing.
+* 📥 Selenium-based YouTube comment scraping (headless mode).
 
 ---
 
@@ -114,61 +114,109 @@ streamlit run app.py
 ## 🚀 Functional Modules
 
 | Module              | Description                                        |
-| ------------------- | -------------------------------------------------- |
-| Data Collection     | Scrape YouTube Comments (Selenium-based)           |
-| Data Cleaning       | Remove duplicates, fix spelling, detect script     |
-| Data Annotation     | Rule-based / manual labeling by category           |
-| Data Balancing      | Sample equal toxic and non-toxic classes           |
-| Model Training      | Train custom BERT models (tiny, small, base)       |
-| Model Evaluation    | Accuracy, Precision, Recall, Confusion Matrix      |
-| Toxicity Prediction | Real-time or CSV-based classification              |
-| Tenglish Generator  | Convert transliterated Tenglish into Telugu script |
+| -------------------|----------------------------------------------------|
+| Data Collection     | Scrapes YouTube comments using YT_Scraper.py       |
+| Data Cleaning       | Normalizes text, handles Tenglish, removes noise   |
+| Data Annotation     | Supports rule-based and manual labeling            |
+| Data Balancing      | Equalizes class distribution for training          |
+| Model Training      | Fine-tunes BERT models with configurable settings  |
+| Model Evaluation    | Computes Accuracy, Precision, Recall, F1, matrices |
+| Toxicity Prediction | Real-time or CSV-based toxicity classification     |
+| Tenglish Generator  | Converts Tenglish to Telugu script for consistency |
+
 
 ---
 
 ## ✅ Supported Models
 
-| Category        | Model Name              | Size   |
-| --------------- | ----------------------- | ------ |
-| Tiny (1M-10M)   | prajjwal1/bert-tiny     | \~4M   |
-| Small (10M-50M) | prajjwal1/bert-mini     | \~11M  |
-| Medium (50M+)   | distilbert-base-uncased | \~66M  |
-| Base (100M+)    | bert-base-uncased       | \~110M |
+| Category | Model Name                      | Parameters |
+|----------|----------------------------------|------------|
+| Tiny     | prajjwal1/bert-tiny             | ~4.3M      |
+| Small    | prajjwal1/bert-mini             | ~29M       |
+| Small    | google/bert_uncased_L-4_H-256_A-4 | ~4.3M    |
 
-Select the size & accuracy tradeoff that fits your resource availability. Training configurations such as epochs, LR, batch size are tunable via the UI.
+
+Models are selected based on resource availability. Training parameters (e.g., epochs, learning rate, batch size) are tunable via the Streamlit UI. Larger models like distilbert-base-uncased (~66M parameters) are planned for future enhancements.
 
 ---
 
 ## 📈 Model Performance Report
 
-We evaluated our models on both binary and multi-class toxicity classification tasks. Here’s how they performed:
-
-### 🔹 Binary Classification  
-- **Accuracy**: 85.6%  
-- **F1 Score**: 0.8562  
-- **Model Used**: `google/bert_uncased_L-4_H-256_A-4`  
-✅ This model performs reliably and demonstrates strong potential for binary toxicity detection across Telugu, Tenglish, and English inputs.
+The models were evaluated on a Telugu/Tenglish dataset (~8,000 records) for both **binary** and **multi-class** toxicity detection tasks. Below are the detailed results:
 
 ---
 
-### 🔹 Multi-Class Classification  
-- **Accuracy**: 34.1%  
-- **F1 Score**: 0.2754  
-- **Model Used**: `prajjwal1/bert-tiny`  
+### 🔹 Binary Classification
 
-⚠️ We're actively working to improve the multi-class classification model. Here are a few reasons that might explain its current underperformance:
+- **Model Used**: `google/bert_uncased_L-4_H-256_A-4`
+- **Accuracy**: 85.62%
+- **Precision**:  
+  - Toxic: 85.7%  
+  - Non-Toxic: 85.65%
+- **Recall**:  
+  - Toxic: 93.4%  
+  - Non-Toxic: 85.62%
+- **F1-Score**:  
+  - Toxic: 84.5%  
+  - Overall: 85.62%
 
-- 📉 **Limited Training Data**: The model was trained on approximately **8,000 records**, which isn’t sufficient for fine-grained multi-class detection.
-- ⚖️ **Imbalanced Class Distribution**:
-  - The dataset contains **11 distinct classes**.
-  - Only **1 class** has more than **1,000 samples**, One more class has **700+ samples**,
-  - The remaining classes each range between **400–600 records**.
-- 🌐 **Linguistic Diversity**:
-  - Our dataset includes a mixture of **pure Telugu script**, **Tenglish** (Telugu-English transliteration), and **standard English**.
-  - This variation increases linguistic noise and can lead to misclassifications, especially when the model hasn’t seen enough diverse examples.
+✅ **Insights**:  
+This model exhibits strong and reliable performance, making it well-suited for **live moderation** of Telugu, Tenglish, and English text inputs.
 
-We plan to address these limitations in future iterations by expanding the dataset, balancing class representation, and exploring multilingual fine-tuning strategies.
+🆚 `prajjwal1/bert-tiny` also performed closely with **84.72% accuracy**, and showed even **higher Non-Toxic precision** at **93.8%**, but slightly lower Toxic class performance.
 
+---
+
+### 🔹 Multi-Class Classification (11 Toxicity Types + "none")
+
+- **Best Model**: `prajjwal1/bert-mini`
+- **Accuracy**: 47.64%
+- **Precision (macro)**: 0.571  
+- **Recall (macro)**: 0.476  
+- **F1-Score (macro)**: 0.491
+
+#### 📊 Other Model Performances:
+| Model                                | Accuracy | F1 Score |
+|--------------------------------------|----------|----------|
+| `google/bert_uncased_L-4_H-256_A-4` | 45.30%   | 0.404    |
+| `prajjwal1/bert-tiny`               | 34.18%   | 0.237    |
+
+---
+
+### ⚠️ Challenges
+
+- **Class Imbalance**:
+  - Only **1 class** has more than **1,000 samples**
+  - Another class has **700+**
+  - Remaining classes range between **400–600**
+  - Skews predictions toward **"none"** or dominant labels
+
+- **Semantic Overlap**:
+  - Confusion seen between:
+    - `mixed_toxicity`
+    - `gender_targeted`
+    - `films_fan_war`
+    - `political_toxicity`
+
+- **Linguistic Diversity**:
+  - Dataset includes:
+    - Telugu (native script)
+    - Tenglish (Telugu in Latin script)
+    - Standard English
+  - Adds **linguistic noise**, especially hard for smaller models like `bert-tiny`  
+  - Example: `bert-tiny` scored **zero precision** for the class `threatening`
+
+---
+
+### 🔮 Future Plans
+
+- Expand annotated dataset (aim for 20K+ diverse examples)
+- Address class imbalance via:
+  - Oversampling
+  - Synthetic augmentation
+- Multilingual & cross-lingual fine-tuning (e.g., `indicBERT`, `distilbert-base-uncased`)
+- Add language detection and script normalization pre-processing
+- Evaluate on real-world moderation scenarios
 
 ---
 
@@ -178,55 +226,58 @@ We plan to address these limitations in future iterations by expanding the datas
 [Scrape] → [Annotate] → [Clean] → [Balance] → [Train] → [Evaluate] → [Predict]
 ```
 
-Each step is fully modular inside the Streamlit UI.
-
----
+Each step is managed via the **Streamlit UI**, with modular scripts located in the [`utils/`](./utils) directory.
 
 ---
 
 ## 📘 Documentation
 
-More detailed documentation available in the [`/docs`](./docs) folder.
+Detailed documentation is available in the [`/docs`](./docs) folder, covering:
 
-Includes:
+- 📚 **Research Literature**  
+  Insights into BERT models and their application to toxicity detection in multilingual contexts.
 
-* Research Literature  
-* Evaluation Reports  
-* Confusion Matrices  
-* Training Observations  
+- 📊 **Evaluation Reports**  
+  Includes confusion matrices, performance metrics, and key training observations.
 
-📄 **Visual Setup Guide**:  
-Checkout [`DetoxifyTelugu.html`](./DetoxifyTelugu.html) for a **step-by-step guide** to set up and use the Detoxify-Telugu platform via Streamlit.  
-📸 It includes annotated screenshots for each functionality.  
-▶️ A **YouTube walkthrough** is also attached to help you follow along visually and interact with the system effectively.
-
+- 🌐 **Tenglish Transliteration**  
+  Notes on challenges and methods used to normalize Telugu-English mixed inputs.
 
 ---
+
+### 📄 Visual Setup Guide
+
+- Open [`index.html`](./index.html) for a **step-by-step walkthrough** of the system.
+- It contains annotated screenshots explaining each module and how to use them.
+- ▶️ A **YouTube video walkthrough** (linked inside the `/docs` folder) demonstrates the full Streamlit UI and pipeline flow.
 
 ---
 
 ## ⚠️ Dataset Disclaimer
-Important:
-The dataset included in this repository is a sanitized and minimized version for demonstration purposes only.
-Due to the presence of explicit and potentially offensive content in the original dataset, it is not included publicly in this repository.
 
-🔒 To access the full dataset, please contact the author directly for request and usage terms.
+**Important:**  
+This repository only includes a **sanitized and minimized dataset** for demonstration purposes.
 
----
+Due to the presence of **explicit and potentially offensive content** in the original dataset, it has **not been publicly released**.
+
+🔒 If you require access to the full dataset for academic or research purposes, please contact the author directly to discuss terms of use.
 
 ---
 
 ## 📫 Author & Contact
 
-**Pavan Yellathakota**
-🎓 Clarkson University
-📧 [pavanyellathakota@gmail.com](mailto:pavanyellathakota@gmail.com)
+**Pavan Yellathakota**  
+🎓 Clarkson University  
+📧 [pavanyellathakota@gmail.com](mailto:pavanyellathakota@gmail.com)  
 🔗 [https://pye.pages.dev](https://pye.pages.dev)
 
 ---
 
 ## 🧾 License & Credits
 
-* Inspired by [Detoxify](https://github.com/unitaryai/detoxify)
-* Uses [HuggingFace Transformers](https://huggingface.co/transformers/)
-* Interface built on [Streamlit](https://streamlit.io)
+- 💡 Inspired by [Detoxify](https://github.com/unitaryai/detoxify)  
+- 🤗 Built with [HuggingFace Transformers](https://huggingface.co/transformers)  
+- 📺 UI powered by [Streamlit](https://streamlit.io)  
+- 🔍 Scraping module powered by [Selenium](https://www.selenium.dev)
+
+---
